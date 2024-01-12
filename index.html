@@ -1,0 +1,79 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leer archivo Excel con JavaScript</title>
+    <!-- 
+        Utilización de la biblioteca SheetJS desde internet mediante el CDN
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    -->
+    <link rel="stylesheet" href="styles/index_page.css">
+</head>
+<body>
+    <h1>Leer archivo Excel con JavaScript</h1>
+    <div class="float-container">
+        <div class="float-child">
+            <div class="green">
+                <p>Float Column 1</p>
+                <input type="file" id="excel-file-hoy" accept=".xls, .xlsx">
+            </div>
+        </div>
+        <div class="float-child">
+            <div class="blue">
+                <p>Float Column 2</p>
+                <input type="file" id="excel-file-ayer" accept=".xls, .xlsx">
+            </div>
+          </div>
+        <div class="float-child">
+            <div class="green"; id="excel-data-hoy">Float Column 3</div>
+        </div>
+        <div class="float-child">
+            <div class="blue"; id="excel-data-ayer">Float Column 4</div>
+        </div>
+    </div>
+    
+    <script src="scripts/xlsx.full.min.js"></script>
+    <script>
+        document.getElementById('excel-file-hoy').addEventListener('change', handleFile);
+        document.getElementById('excel-file-ayer').addEventListener('change', handleFile);
+
+        function handleFile(event) {
+
+            const repositorio_name = event.target.id; //cambiar el nombre culero de la variable
+            console.log(event.target.id)
+
+            const fileInput = event.target;
+            const fileList = fileInput.files;
+
+            if (fileList.length > 0) {
+                const file = fileList[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const data = e.target.result;
+                    const workbook = XLSX.read(data, { type: 'binary' });
+                    const sheetName = workbook.SheetNames[0];
+                    const sheet = workbook.Sheets[sheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+                    displayData(jsonData,repositorio_name);
+                };
+
+                reader.readAsBinaryString(file);
+            }
+        }
+
+        function displayData(data, repositorio_name) {
+            if (repositorio_name === 'excel-data-hoy'){
+                const excelDataContainer = document.getElementById('excel-file-hoy');
+                excelDataContainer.innerHTML = '<h2>Contenido del archivo Excel:</h2><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            }
+            console.log(document.getElementById('excel-file-hoy'));
+            
+        }
+    </script>
+</body>
+</html>
