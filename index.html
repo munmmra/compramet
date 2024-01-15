@@ -67,12 +67,15 @@
         }
 
         function displayData(data, repositorio_name) {
-            if (repositorio_name === 'excel-data-hoy'){
-                const excelDataContainer = document.getElementById('excel-file-hoy');
+            if (repositorio_name === 'excel-file-hoy'){
+                const excelDataContainer = document.getElementById('excel-data-hoy');
                 excelDataContainer.innerHTML = '<h2>Contenido del archivo Excel:</h2><pre>' + JSON.stringify(data, null, 2) + '</pre>';
             }
-            console.log(document.getElementById('excel-file-hoy'));
-            
+            if (repositorio_name === 'excel-file-ayer'){
+                const excelDataContainer = document.getElementById('excel-data-ayer');
+                excelDataContainer.innerHTML = '<h2>Contenido del archivo Excel:</h2><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            }
+            console.log(document.getElementById('excel-data-hoy'));
         }
     </script>
 </body>
