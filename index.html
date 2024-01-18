@@ -14,11 +14,12 @@
 </head>
 <body>
     <h1>Leer archivo Excel con JavaScript</h1>
+    <button type="button">Validar Archivos</button>
     <div class="float-container">
         <div class="float-child">
             <div class="green">
                 <p>Float Column 1</p>
-                <input type="file" id="excel-file-hoy" accept=".xls, .xlsx">
+                <input type="file"; id="excel-file-hoy"; accept=".xls, .xlsx">
             </div>
         </div>
         <div class="float-child">
@@ -40,13 +41,14 @@
         document.getElementById('excel-file-hoy').addEventListener('change', handleFile);
         document.getElementById('excel-file-ayer').addEventListener('change', handleFile);
 
+        let datHoy;
+        let dataAyer;
+
         function handleFile(event) {
-
             const repositorio_name = event.target.id; //cambiar el nombre culero de la variable
-            console.log(event.target.id)
-
             const fileInput = event.target;
             const fileList = fileInput.files;
+            const fileName = fileInput.value.split("\\").pop(); // pinche wanna bee
 
             if (fileList.length > 0) {
                 const file = fileList[0];
@@ -59,23 +61,45 @@
                     const sheet = workbook.Sheets[sheetName];
                     const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-                    displayData(jsonData,repositorio_name);
+                    displayData(jsonData,repositorio_name, fileName);
                 };
 
                 reader.readAsBinaryString(file);
             }
         }
 
-        function displayData(data, repositorio_name) {
+        function displayData(data, repositorio_name, fileName) {
             if (repositorio_name === 'excel-file-hoy'){
                 const excelDataContainer = document.getElementById('excel-data-hoy');
-                excelDataContainer.innerHTML = '<h2>Contenido del archivo Excel:</h2><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                excelDataContainer.innerHTML = '<h2>Contenido del archivo Excel: <br>'+fileName+'</h2><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                datHoy = data;
+
+                console.log(document.getElementById('excel-file-hoy'));
             }
             if (repositorio_name === 'excel-file-ayer'){
                 const excelDataContainer = document.getElementById('excel-data-ayer');
-                excelDataContainer.innerHTML = '<h2>Contenido del archivo Excel:</h2><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                excelDataContainer.innerHTML = '<h2>Contenido del archivo Excel: <br>'+fileName+'</h2><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                dataAyer = data;
             }
             console.log(document.getElementById('excel-data-hoy'));
+        }
+
+        function validarArchivos() {
+            const ancabezados = ["NO",
+                                 "SIGLAS DEPENDENCIA_ENTIDAD",
+                                 "NÚMERO DE PROCEDIMIENTO DE CONTRATACIÓN",
+                                 "CÓDIGO DE EXPEDIENTE",
+                                 "TIPO DE PROCEDIMIENTO",
+                                 "NOMBRE DEL PROCEDIMIENTO",
+                                 "CARÁCTER",
+                                 "TIPO DE CONTRATACIÓN",
+                                 "FECHA APERTURA",
+                                 "FECHA JUNTA DE ACLARACIONES",
+                                 "ESTATUS",
+                                 "UNIDAD COMPRADORA",
+                                 "ENTIDAD FEDERATIVA",];
+            //if (dataAyer )
+            
         }
     </script>
 </body>
