@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leer archivo Excel con JavaScript</title>
     <!-- 
@@ -14,7 +14,8 @@
 </head>
 <body>
     <h1>Leer archivo Excel con JavaScript</h1>
-    <button type="button">Validar Archivos</button>
+    <button type="button"; id="booton-validar"; onclick="validarArchivos()">Validar Archivos</button>
+    <div class="float-container"><label id="label-validacion">Validación</label></div>
     <div class="float-container">
         <div class="float-child">
             <div class="green">
@@ -40,6 +41,7 @@
     <script>
         document.getElementById('excel-file-hoy').addEventListener('change', handleFile);
         document.getElementById('excel-file-ayer').addEventListener('change', handleFile);
+     
 
         let datHoy;
         let dataAyer;
@@ -98,8 +100,9 @@
                                  "ESTATUS",
                                  "UNIDAD COMPRADORA",
                                  "ENTIDAD FEDERATIVA",];
-            //if (dataAyer )
-            
+
+            document.getElementById('label-validacion').innerHTML = "validando";
+            console.log(document.getElementById('label-validacion'));
         }
     </script>
 </body>
